@@ -104,7 +104,20 @@
     font-size:clamp(1.35rem,5.4vw,2rem);opacity:0;transform:scale(.7);text-align:center;padding:0 12px}
   .feedback.show{animation:fbPop .45s cubic-bezier(.34,1.56,.64,1) forwards}
   .feedback.good{color:#2F9E44}.feedback.try{color:#E8590C}.feedback.hint{color:#1971C2}
+  .feedback.listen{color:#1971C2;font-size:clamp(1.1rem,4.5vw,1.5rem)}
   @keyframes fbPop{to{opacity:1;transform:scale(1)}}
+
+  /* animated "I'm listening" bars */
+  .bars{display:inline-flex;gap:4px;align-items:flex-end;height:26px;margin-right:10px;vertical-align:middle}
+  .bars i{width:6px;border-radius:3px;background:#4DABF7;animation:wv .9s ease-in-out infinite}
+  .bars i:nth-child(1){height:10px;animation-delay:-.2s}
+  .bars i:nth-child(2){height:18px;animation-delay:-.45s}
+  .bars i:nth-child(3){height:26px;animation-delay:-.1s}
+  .bars i:nth-child(4){height:16px;animation-delay:-.55s}
+  .bars i:nth-child(5){height:12px;animation-delay:-.3s}
+  @keyframes wv{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+
+  .heard{display:block;font-family:'Nunito';font-weight:700;font-size:.95rem;color:#8AA0B8;margin-top:3px}
 
   /* ---------- CONTROLS ---------- */
   .controls{display:flex;align-items:center;gap:clamp(24px,7vw,50px);padding:16px 0 clamp(22px,4vh,38px)}
@@ -292,7 +305,7 @@
   /* ---------- state ---------- */
   var deck=[], current="", state="idle", mastered=new Set(), moodTimer=null;
 
-  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j=t?j:j]; a[j]=t; } return a; }
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
 
   /* ---------- chips ---------- */
   WORDS.forEach(function(w){
@@ -329,7 +342,7 @@
     clearFeedback(); owlMood(null); setState("idle");
   }
   function showFeedback(msg,kind){ fb.textContent=msg; fb.className="feedback show "+kind; }
-  function clearFeedback(){ fb.className="feedback"; }
+  function clearFeedback(){ fb.className="feedback"; fb.textContent=""; }
 
   function owlMood(m,ms){
     owlEl.classList.remove("mood-happy","mood-listen");
@@ -346,9 +359,20 @@
     mastered.add(current); renderChips();
     setTimeout(function(){ clearFeedback(); nextWord(); },2100);
   }
+
   function gentle(msg){
-    setState("feedback"); showFeedback(msg,"try"); sfxWrong();
-    setTimeout(function(){ clearFeedback(); setState("idle"); },1700);
+    setState("feedback");
+    fb.className="feedback show try";
+    fb.textContent=msg;
+    var h=lastHeard();
+    if(h){
+      var s=document.createElement("span");
+      s.className="heard";
+      s.textContent='I heard: "'+h+'"';
+      fb.appendChild(s);
+    }
+    sfxWrong();
+    setTimeout(function(){ clearFeedback(); setState("idle"); },2000);
   }
 
   /* ---------- speech: say the word (TTS) ---------- */
@@ -370,41 +394,118 @@
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   }
 
-  /* ---------- speech: listen (STT) ---------- */
+  /* ---------- speech: listen (STT) — tuned for slow, hesitant kids ---------- */
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SR){ note.classList.add("show"); card.classList.add("tap-to-hear"); }
 
+  var heard=[];
+  function lastHeard(){
+    if(!heard.length) return "";
+    var u=[]; heard.forEach(function(x){ if(u.indexOf(x)===-1) u.push(x); });
+    return u[u.length-1];
+  }
+
+  /* normalize: lowercase, strip everything but letters ("s i t" -> "sit", "It's" -> "its") */
   function norm(s){ return (s||"").toLowerCase().replace(/[^a-z]/g,""); }
+  /* word tokens: for filler like "uh, sit" */
+  function tokens(s){ return (s||"").toLowerCase().replace(/[^a-z\s]/g," ").split(/\s+/).filter(Boolean); }
+
+  /* Levenshtein distance (only ever need 0 or 1) */
+  function lev(a,b){
+    var m=a.length,n=b.length;
+    if(Math.abs(m-n)>1) return 99;
+    var d=[],i,j;
+    for(i=0;i<=m;i++){d[i]=[i];}
+    for(j=0;j<=n;j++){d[0][j]=j;}
+    for(i=1;i<=m;i++)for(j=1;j<=n;j++){
+      d[i][j]=Math.min(d[i-1][j]+1, d[i][j-1]+1,
+        d[i-1][j-1]+(a.charAt(i-1)===b.charAt(j-1)?0:1));
+    }
+    return d[m][n];
+  }
+
+  /* Forgiving but safe matching:
+     - "s i t", "SIT!", "It's"  -> exact after normalization
+     - "uh, sit"                -> target appears as a whole word
+     - "six" for "sit", "ant" for "and" -> one-sound-off, 3+ letter words only
+     - NEVER accepts another word from this week's list (it != at, its != sit)  */
+  function matches(target, raw){
+    var n=norm(raw), toks=tokens(raw);
+    if(n===target) return true;
+    if(toks.indexOf(target)!==-1) return true;
+    if(n && WORDS.indexOf(n)!==-1) return false;   /* a different list word — reject */
+    if(target.length>=3 && n.length>=2 && lev(n,target)<=1) return true;
+    return false;
+  }
+
+  function showListeningUI(){
+    fb.className="feedback show listen";
+    fb.textContent="";
+    var w=document.createElement("span"); w.className="bars";
+    for(var i=0;i<5;i++){ w.appendChild(document.createElement("i")); }
+    fb.appendChild(w);
+    var t=document.createElement("span");
+    t.textContent="Take your time — I'm listening!";
+    fb.appendChild(t);
+  }
 
   function startListening(){
     if(!SR || state!=="idle") return;
+
+    /* stop the app's own voice so it can't be heard as an answer */
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+
     var rec=new SR();
-    rec.lang="en-US"; rec.interimResults=false; rec.maxAlternatives=3;
+    rec.lang="en-US";
+    rec.continuous=true;      /* keep listening through pauses — slow "s… i… t" speech */
+    rec.interimResults=true;  /* match partial results early, before the final transcript */
+    rec.maxAlternatives=5;    /* more candidate transcripts to check */
+
+    heard=[];
     var done=false, listening=true;
 
-    setState("listening"); clearFeedback(); hideBubble();
+    setState("listening"); hideBubble(); showListeningUI();
     micBtn.classList.add("listening"); micLabel.textContent="Listening…"; owlMood("mood-listen");
 
     function finish(){
       if(done) return; done=true; listening=false;
+      try{ rec.abort(); }catch(e){}
       micBtn.classList.remove("listening"); micLabel.textContent="Say the word"; owlMood(null);
     }
+
+    /* in continuous mode e.results accumulates — scan everything each time */
+    function checkResults(res){
+      for(var i=0;i<res.length;i++){
+        var alts=res[i];
+        for(var j=0;j<alts.length;j++){
+          var raw=alts[j].transcript;
+          heard.push(raw.toLowerCase().replace(/\s+/g," ").trim());
+          if(matches(current,raw)) return true;
+        }
+      }
+      return false;
+    }
+
     rec.onresult=function(e){
-      var alts=Array.from(e.results[0]).map(function(r){return norm(r.transcript);});
-      finish();
-      if(alts.indexOf(norm(current))!==-1) onCorrect(); else gentle(pick(TRY));
+      if(done) return;
+      if(checkResults(e.results)){ finish(); onCorrect(); }
     };
     rec.onerror=function(e){
+      if(done) return;
       finish();
       if(state!=="idle") return;
       if(e.error==="no-speech") gentle("I didn't hear that — try again!");
       else if(e.error==="not-allowed"||e.error==="service-not-allowed") gentle("Please let me hear you! 🎤");
       else gentle(pick(TRY));
     };
-    rec.onend=function(){ if(listening){ finish(); gentle("I didn't hear that — try again!"); } };
+    rec.onend=function(){
+      if(listening){ finish(); gentle("I didn't hear that — try again!"); }
+    };
 
-    try{ rec.start(); }catch(err){ finish(); setState("idle"); }
-    setTimeout(function(){ if(listening && rec){ try{rec.stop();}catch(e){} } },4500);
+    try{ rec.start(); }catch(err){ finish(); setState("idle"); clearFeedback(); }
+
+    /* generous window for slow speakers */
+    setTimeout(function(){ if(listening && rec){ try{rec.stop();}catch(e){} } },6500);
   }
 
   /* ---------- buttons ---------- */
