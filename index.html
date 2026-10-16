@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#BDE9FF">
-<title>Sight Word Stars · Week 1</title>
+<title>Sight Word Stars · CAO 10/16/26</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
@@ -23,7 +23,6 @@
     overflow-x:hidden;-webkit-tap-highlight-color:transparent;user-select:none;
   }
 
-  /* ---------- SCENE (sky, sun, clouds, hills) ---------- */
   .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
   .sun{position:absolute;top:4%;right:5%;width:clamp(72px,13vw,120px);animation:spin 48s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
@@ -39,29 +38,26 @@
   .flower{position:absolute;font-size:clamp(20px,3.4vw,30px);transform-origin:50% 100%;animation:sway 3.2s ease-in-out infinite alternate}
   @keyframes sway{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
 
-  /* ---------- LAYOUT ---------- */
   .app{position:relative;z-index:1;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center}
-  .topbar{width:min(680px,94vw);display:flex;justify-content:space-between;align-items:center;padding:14px 6px 8px}
+  .topbar{width:min(680px,94vw);display:flex;justify-content:space-between;align-items:center;padding:14px 6px 8px;flex-wrap:wrap;row-gap:8px}
   .brand{font-family:'Baloo 2';font-weight:800;font-size:clamp(1.15rem,4vw,1.5rem);display:flex;gap:8px;align-items:center}
   .brand .bstar{color:#FFB703;display:inline-block;animation:twinkle 2.4s ease-in-out infinite}
   @keyframes twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.25) rotate(18deg)}}
   .top-right{display:flex;align-items:center;gap:8px}
-  .week-chip{background:#fff;border-radius:999px;padding:6px 14px;font-weight:800;font-size:.85rem;box-shadow:0 3px 0 rgba(29,53,87,.12)}
+  .week-chip{background:#fff;border-radius:999px;padding:6px 14px;font-weight:800;font-size:.78rem;white-space:nowrap;box-shadow:0 3px 0 rgba(29,53,87,.12)}
   .btn-reset{width:34px;height:34px;border-radius:50%;border:none;background:#fff;box-shadow:0 3px 0 rgba(29,53,87,.12);
     font-size:1.05rem;cursor:pointer;color:var(--soft);transition:transform .3s}
   .btn-reset:hover{transform:rotate(-180deg)}
 
-  /* progress chips */
-  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;width:min(680px,94vw)}
-  .chip{font-family:'Baloo 2';font-weight:700;font-size:.95rem;background:rgba(255,255,255,.78);color:#93A8C4;
-    border-radius:999px;padding:4px 13px;box-shadow:0 2px 0 rgba(29,53,87,.1);transition:background .3s,color .3s}
+  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;width:min(680px,94vw)}
+  .chip{font-family:'Baloo 2';font-weight:700;font-size:.85rem;background:rgba(255,255,255,.78);color:#93A8C4;
+    border-radius:999px;padding:3px 11px;box-shadow:0 2px 0 rgba(29,53,87,.1);transition:background .3s,color .3s}
   .chip::before{content:'☆';margin-right:5px;color:#C3D2E4}
   .chip.done{background:#FFF3BF;color:#7A5900;box-shadow:0 2px 0 #F0C33C}
   .chip.done::before{content:'★';color:#FFB703}
   .chip.pop{animation:chipPop .55s cubic-bezier(.34,1.56,.64,1)}
   @keyframes chipPop{0%{transform:scale(1)}50%{transform:scale(1.35) rotate(-6deg)}100%{transform:scale(1)}}
 
-  /* ---------- WORD AREA ---------- */
   .word-area{display:flex;align-items:center;gap:clamp(10px,3vw,26px);margin:auto 0;width:min(680px,94vw)}
   .owl{width:clamp(92px,26vw,150px);flex:none;position:relative}
   .bob{animation:bob 3.2s ease-in-out infinite}
@@ -99,15 +95,13 @@
   @keyframes cardPop{0%{transform:rotate(-1.6deg) scale(.5)}70%{transform:rotate(-1.6deg) scale(1.08)}100%{transform:rotate(-1.6deg) scale(1)}}
   .word-card.tap-to-hear{cursor:pointer}
 
-  /* ---------- FEEDBACK ---------- */
   .feedback{min-height:58px;margin-top:clamp(10px,2.5vh,20px);font-family:'Baloo 2';font-weight:800;
     font-size:clamp(1.35rem,5.4vw,2rem);opacity:0;transform:scale(.7);text-align:center;padding:0 12px}
   .feedback.show{animation:fbPop .45s cubic-bezier(.34,1.56,.64,1) forwards}
   .feedback.good{color:#2F9E44}.feedback.try{color:#E8590C}.feedback.hint{color:#1971C2}
-  .feedback.listen{color:#1971C2;font-size:clamp(1.1rem,4.5vw,1.5rem)}
+  .feedback.listen{color:#1971C2;font-size:clamp(1.05rem,4.3vw,1.45rem)}
   @keyframes fbPop{to{opacity:1;transform:scale(1)}}
 
-  /* animated "I'm listening" bars */
   .bars{display:inline-flex;gap:4px;align-items:flex-end;height:26px;margin-right:10px;vertical-align:middle}
   .bars i{width:6px;border-radius:3px;background:#4DABF7;animation:wv .9s ease-in-out infinite}
   .bars i:nth-child(1){height:10px;animation-delay:-.2s}
@@ -119,7 +113,6 @@
 
   .heard{display:block;font-family:'Nunito';font-weight:700;font-size:.95rem;color:#8AA0B8;margin-top:3px}
 
-  /* ---------- CONTROLS ---------- */
   .controls{display:flex;align-items:center;gap:clamp(24px,7vw,50px);padding:16px 0 14px}
   .ctrl{display:flex;flex-direction:column;align-items:center;gap:10px}
   .ctrl-label{font-weight:800;font-size:.95rem;color:#3E5C76}
@@ -139,7 +132,6 @@
     box-shadow:0 7px 0 var(--yellow-d),0 14px 20px rgba(224,168,0,.3)}
   .btn-help:active:not(:disabled){box-shadow:0 2px 0 var(--yellow-d)}
 
-  /* ---------- PARENT CONTROLS (subtle, for grown-ups) ---------- */
   .parent-bar{display:flex;align-items:center;gap:10px;padding-bottom:clamp(14px,3vh,26px)}
   .parent-tag{font-weight:800;font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;color:#9FB3C8}
   .btn-parent{background:#fff;border:2px solid #CBD9E8;color:#5C7A9E;font-family:'Nunito',sans-serif;
@@ -153,7 +145,6 @@
     font-size:.85rem;padding:8px 14px;border-radius:12px;max-width:min(680px,90vw);text-align:center;display:none}
   .note.show{display:block}
 
-  /* ---------- CELEBRATION ---------- */
   .overlay{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:rgba(214,240,255,.9);padding:20px}
   .overlay.show{display:grid}
   .celebrate{background:#fff;border-radius:34px;padding:clamp(28px,6vw,48px) clamp(24px,7vw,56px);text-align:center;
@@ -171,7 +162,6 @@
 </head>
 <body>
 
-<!-- background scene -->
 <div class="scene" aria-hidden="true">
   <svg class="sun" viewBox="0 0 120 120">
     <g fill="#FFD166">
@@ -204,12 +194,12 @@
   <header class="topbar">
     <div class="brand"><span class="bstar">★</span> Sight Word Stars</div>
     <div class="top-right">
-      <span class="week-chip">Week 1 · 10 words</span>
+      <span class="week-chip" id="weekChip">CAO 10/16/26 - 10 words</span>
       <button class="btn-reset" id="resetBtn" title="Start over" aria-label="Start over">↺</button>
     </div>
   </header>
 
-  <section class="chips" id="chips" aria-label="Words mastered this week"></section>
+  <section class="chips" id="chips" aria-label="Words mastered"></section>
 
   <main class="word-area">
     <div class="owl" id="owl">
@@ -244,7 +234,7 @@
     <div class="word-card" id="card">
       <span class="tape l"></span><span class="tape r"></span>
       <span class="say-label">👉 Say this word</span>
-      <div class="word" id="word">the</div>
+      <div class="word" id="word">be</div>
     </div>
   </main>
 
@@ -270,10 +260,9 @@
     <button class="btn-parent" id="parentBtn" aria-label="Parent: mark word correct and go to next">✓ Mark correct · next word</button>
   </div>
 
-  <p class="note" id="noSrNote">This browser can’t listen yet — try Chrome. Tap the word to hear it, and tap ? anytime.</p>
+  <p class="note" id="noSrNote">This browser can't listen yet — try Chrome. Tap the word to hear it, and tap ? anytime.</p>
 </div>
 
-<!-- celebration -->
 <div class="overlay" id="overlay">
   <div class="celebrate">
     <div class="big-owl owl mood-happy" aria-hidden="true">
@@ -296,7 +285,7 @@
       </svg>
     </div>
     <h2>You did it! 🎉</h2>
-    <p>All 10 words this week — you’re a sight word star!</p>
+    <p id="celebrateMsg">All 10 words — you're a sight word star!</p>
     <button class="btn-again" id="againBtn">Play again</button>
   </div>
 </div>
@@ -306,84 +295,148 @@
 <script>
 (function(){
   "use strict";
-  var WORDS = ["the","i","at","and","a","if","it","its","sit","in"];
+
+  var WORDS = [
+    "be","me","had","has","him",
+    "his","hot","hand","ran","red"
+  ];
+
+  var LOWER_WORDS = WORDS.map(function(w){return w.toLowerCase();});
 
   var $ = function(id){ return document.getElementById(id); };
   var wordEl=$("word"), card=$("card"), fb=$("feedback"), micBtn=$("micBtn"),
       helpBtn=$("helpBtn"), micLabel=$("micLabel"), owlEl=$("owl"), bubble=$("bubble"),
-      chipsEl=$("chips"), overlay=$("overlay"), note=$("noSrNote");
+      chipsEl=$("chips"), overlay=$("overlay"), note=$("noSrNote"),
+      weekChip=$("weekChip"), celebrateMsg=$("celebrateMsg");
+
+  if(weekChip){
+    weekChip.textContent = "CAO 10/16/26 - " + WORDS.length + " words";
+  }
+
+  if(celebrateMsg){
+    celebrateMsg.textContent = "All " + WORDS.length + " words — you're a sight word star!";
+  }
 
   var GOOD=["Yay! You said it!","Great job! ⭐","Yes! That's right!","Awesome! 🎉","You did it!"];
   var TRY =["Almost! Try again! 💪","So close — try once more!","You can do it — try again!"];
   var pick=function(a){ return a[Math.floor(Math.random()*a.length)]; };
 
-  /* ---------- state ---------- */
   var deck=[], current="", state="idle", mastered=new Set(), moodTimer=null;
   var pendingTimer=null, fbKind=null;
 
   function clearPending(){ if(pendingTimer){ clearTimeout(pendingTimer); pendingTimer=null; } }
 
-  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
+  function shuffle(a){
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var t=a[i];a[i]=a[j];a[j]=t;
+    }
+    return a;
+  }
 
-  /* ---------- chips ---------- */
   WORDS.forEach(function(w){
     var s=document.createElement("span");
-    s.className="chip"; s.dataset.word=w; s.textContent=w;
+    s.className="chip";
+    s.dataset.word=w;
+    s.textContent=w;
     chipsEl.appendChild(s);
   });
+
   function renderChips(){
     chipsEl.querySelectorAll(".chip").forEach(function(c){
       var done=mastered.has(c.dataset.word);
       if(done && !c.classList.contains("done")){
         c.classList.add("done","pop");
         setTimeout(function(){c.classList.remove("pop")},600);
-      } else if(!done){ c.classList.remove("done"); }
+      } else if(!done){
+        c.classList.remove("done");
+      }
     });
   }
 
-  /* ---------- game flow ---------- */
   function setState(s){
     state=s;
     micBtn.disabled = s!=="idle";
     helpBtn.disabled= s!=="idle";
   }
+
   function newGame(){
     clearPending();
-    mastered.clear(); deck=shuffle(WORDS.slice()); renderChips();
-    overlay.classList.remove("show"); stopCelebrate();
+    closeMic();
+    cancelSpeech();
+
+    mastered.clear();
+    deck=shuffle(WORDS.slice());
+    renderChips();
+    overlay.classList.remove("show");
+    stopCelebrate();
     nextWord();
   }
+
   function nextWord(){
     if(!deck.length){ celebrate(); return; }
     current=deck.pop();
     wordEl.textContent=current;
-    card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop");
-    clearFeedback(); owlMood(null); setState("idle");
+    card.classList.remove("pop");
+    void card.offsetWidth;
+    card.classList.add("pop");
+    clearFeedback();
+    owlMood(null);
+    setState("idle");
   }
-  function showFeedback(msg,kind){ fb.textContent=msg; fb.className="feedback show "+kind; fbKind=kind; }
-  function clearFeedback(){ fb.className="feedback"; fb.textContent=""; fbKind=null; }
+
+  function showFeedback(msg,kind){
+    fb.textContent=msg;
+    fb.className="feedback show "+kind;
+    fbKind=kind;
+  }
+
+  function clearFeedback(){
+    fb.className="feedback";
+    fb.textContent="";
+    fbKind=null;
+    liveHeardEl=null;
+  }
 
   function owlMood(m,ms){
     owlEl.classList.remove("mood-happy","mood-listen");
     if(m) owlEl.classList.add(m);
     clearTimeout(moodTimer);
-    if(ms) moodTimer=setTimeout(function(){ owlEl.classList.remove("mood-happy","mood-listen"); },ms);
+    if(ms){
+      moodTimer=setTimeout(function(){
+        owlEl.classList.remove("mood-happy","mood-listen");
+      },ms);
+    }
   }
 
   function onCorrect(){
-    setState("feedback"); fbKind="good"; owlMood("mood-happy",2000);
-    showFeedback(pick(GOOD),"good"); sfxCorrect();
+    setState("feedback");
+    fbKind="good";
+    owlMood("mood-happy",2000);
+    showFeedback(pick(GOOD),"good");
+
+    cancelSpeech();
+    sfxCorrect();
+
     var r=card.getBoundingClientRect();
     burst(r.left+r.width/2, r.top+r.height/2, 140);
-    mastered.add(current); renderChips();
+
+    mastered.add(current);
+    renderChips();
+
     clearPending();
-    pendingTimer=setTimeout(function(){ clearFeedback(); nextWord(); },2100);
+    pendingTimer=setTimeout(function(){
+      clearFeedback();
+      nextWord();
+    },2100);
   }
 
   function gentle(msg){
-    setState("feedback"); fbKind="try";
+    setState("feedback");
+    fbKind="try";
     fb.className="feedback show try";
     fb.textContent=msg;
+
     var h=lastHeard();
     if(h){
       var s=document.createElement("span");
@@ -391,47 +444,100 @@
       s.textContent='I heard: "'+h+'"';
       fb.appendChild(s);
     }
+
+    cancelSpeech();
     sfxWrong();
+
     clearPending();
-    pendingTimer=setTimeout(function(){ clearFeedback(); setState("idle"); },2000);
+    pendingTimer=setTimeout(function(){
+      clearFeedback();
+      setState("idle");
+    },2000);
   }
 
-  /* ---------- speech: say the word (TTS) ---------- */
+  /* ---------- TTS ---------- */
   var voices=[];
   if("speechSynthesis" in window){
-    loadVoices(); speechSynthesis.onvoiceschanged=loadVoices;
+    loadVoices();
+    speechSynthesis.onvoiceschanged=loadVoices;
   }
+
   function loadVoices(){ voices=speechSynthesis.getVoices(); }
+
   function pickVoice(){
     return voices.find(function(v){return /en[-_]US/i.test(v.lang)&&/google|samantha|zira|aria|jenny/i.test(v.name);})
         || voices.find(function(v){return /en[-_]US/i.test(v.lang);})
-        || voices.find(function(v){return /^en/i.test(v.lang);}) || null;
+        || voices.find(function(v){return /^en/i.test(v.lang);})
+        || null;
   }
+
+  var SPEECH_OVERRIDES = {
+    "hot": "hot."
+  };
+
+  function speechTextFor(w){
+    if(Object.prototype.hasOwnProperty.call(SPEECH_OVERRIDES, w)){
+      return SPEECH_OVERRIDES[w];
+    }
+    var key=(w||"").toLowerCase();
+    if(Object.prototype.hasOwnProperty.call(SPEECH_OVERRIDES, key)){
+      return SPEECH_OVERRIDES[key];
+    }
+    return w;
+  }
+
+  var speakTimer=null, lastSpeakAt=0, helpLockUntil=0;
+
+  function cancelSpeech(){
+    if(speakTimer){ clearTimeout(speakTimer); speakTimer=null; }
+    if("speechSynthesis" in window){ try{ speechSynthesis.cancel(); }catch(e){} }
+  }
+
   function speak(w){
     if(!("speechSynthesis" in window)) return;
-    var u=new SpeechSynthesisUtterance(w);
-    u.lang="en-US"; u.rate=0.75; u.pitch=1.2;
-    var v=pickVoice(); if(v) u.voice=v;
-    speechSynthesis.cancel(); speechSynthesis.speak(u);
+    var now=Date.now();
+    if(now - lastSpeakAt < 800) return;
+    lastSpeakAt=now;
+
+    var text=speechTextFor(w);
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang="en-US";
+    u.rate=0.65;
+    u.pitch=1.05;
+
+    var v=pickVoice();
+    if(v) u.voice=v;
+
+    cancelSpeech();
+    speakTimer=setTimeout(function(){
+      speakTimer=null;
+      try{ speechSynthesis.speak(u); }catch(e){}
+    },40);
   }
 
-  /* ---------- speech: listen (STT) — tuned for slow, hesitant kids ---------- */
+  /* ---------- STT ---------- */
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){ note.classList.add("show"); card.classList.add("tap-to-hear"); }
+  if(!SR){
+    note.classList.add("show");
+    card.classList.add("tap-to-hear");
+  }
 
-  var heard=[], activeRec=null, isListening=false;
+  var LISTEN_MS = 10000;
+  var MAX_RESTARTS = 20;
+
+  var micRec=null, isListening=false, windowTimer=null, listeningSince=0, restarts=0;
+  var heard=[], liveHeardEl=null;
+
   function lastHeard(){
     if(!heard.length) return "";
-    var u=[]; heard.forEach(function(x){ if(u.indexOf(x)===-1) u.push(x); });
+    var u=[];
+    heard.forEach(function(x){ if(u.indexOf(x)===-1) u.push(x); });
     return u[u.length-1];
   }
 
-  /* normalize: lowercase, strip everything but letters ("s i t" -> "sit", "It's" -> "its") */
   function norm(s){ return (s||"").toLowerCase().replace(/[^a-z]/g,""); }
-  /* word tokens: for filler like "uh, sit" */
   function tokens(s){ return (s||"").toLowerCase().replace(/[^a-z\s]/g," ").split(/\s+/).filter(Boolean); }
 
-  /* Levenshtein distance (only ever need 0 or 1) */
   function lev(a,b){
     var m=a.length,n=b.length;
     if(Math.abs(m-n)>1) return 99;
@@ -445,17 +551,31 @@
     return d[m][n];
   }
 
-  /* Forgiving but safe matching:
-     - "s i t", "SIT!", "It's"  -> exact after normalization
-     - "uh, sit"                -> target appears as a whole word
-     - "six" for "sit", "ant" for "and" -> one-sound-off, 3+ letter words only
-     - NEVER accepts another word from this week's list (it != at, its != sit)  */
+  var ALIASES = {};
+
+  function tokenMatches(target, tok){
+    var t = target.toLowerCase();
+    if(tok === t) return true;
+    if(LOWER_WORDS.indexOf(tok) !== -1 && tok !== t) return false;
+    var aliases = ALIASES[t];
+    if(aliases && aliases.indexOf(tok) !== -1) return true;
+    if(t.length >= 3 && tok.length >= 2 && lev(tok, t) <= 1) return true;
+    return false;
+  }
+
   function matches(target, raw){
-    var n=norm(raw), toks=tokens(raw);
-    if(n===target) return true;
-    if(toks.indexOf(target)!==-1) return true;
-    if(n && WORDS.indexOf(n)!==-1) return false;   /* a different list word — reject */
-    if(target.length>=3 && n.length>=2 && lev(n,target)<=1) return true;
+    var t = target.toLowerCase();
+    var n=norm(raw);
+    var toks=tokens(raw);
+
+    if(n === t) return true;
+    if(n && n !== t && LOWER_WORDS.indexOf(n) !== -1) return false;
+
+    for(var i=0;i<toks.length;i++){
+      if(tokenMatches(target, toks[i])) return true;
+    }
+
+    if(t.length >= 3 && n.length >= 2 && lev(n, t) <= 1) return true;
     return false;
   }
 
@@ -465,86 +585,115 @@
     var w=document.createElement("span"); w.className="bars";
     for(var i=0;i<5;i++){ w.appendChild(document.createElement("i")); }
     fb.appendChild(w);
-    var t=document.createElement("span");
-    t.textContent="Take your time — I'm listening!";
-    fb.appendChild(t);
+    liveHeardEl=document.createElement("span");
+    liveHeardEl.textContent="Take your time — try as many times as you need!";
+    fb.appendChild(liveHeardEl);
   }
 
-  function finishListening(){
-    if(!isListening) return;
+  function updateLiveHeard(raw){
+    if(!liveHeardEl) return;
+    var clean=raw.toLowerCase().replace(/\s+/g," ").trim();
+    liveHeardEl.textContent='I heard "'+clean+'" — try again!';
+  }
+
+  function closeMic(){
     isListening=false;
-    try{ activeRec.abort(); }catch(e){}
-    activeRec=null;
+    if(windowTimer){ clearTimeout(windowTimer); windowTimer=null; }
+    var r=micRec; micRec=null; liveHeardEl=null;
+    if(r){ try{ r.abort(); }catch(e){} }
     micBtn.classList.remove("listening");
     micLabel.textContent="Say the word";
     owlMood(null);
   }
 
+  function hardStop(){
+    if(!isListening) return;
+    closeMic();
+    gentle("Almost! Try again!");
+  }
+
+  function openMic(){
+    var rec;
+    try{ rec=new SR(); }
+    catch(e){ closeMic(); gentle("Microphone unavailable — tap ? to hear it."); return; }
+
+    micRec=rec;
+    rec.lang="en-US";
+    rec.continuous=true;
+    rec.interimResults=true;
+    rec.maxAlternatives=5;
+
+    rec.onresult=function(e){
+      if(!isListening || micRec!==rec) return;
+      for(var i=e.resultIndex;i<e.results.length;i++){
+        var alts=e.results[i];
+        for(var j=0;j<alts.length;j++){
+          if(matches(current, alts[j].transcript)){ closeMic(); onCorrect(); return; }
+        }
+        if(alts.isFinal && alts.length){
+          heard.push(alts[0].transcript.toLowerCase().replace(/\s+/g," ").trim());
+          updateLiveHeard(alts[0].transcript);
+        }
+      }
+    };
+
+    rec.onerror=function(e){
+      if(!isListening || micRec!==rec) return;
+      if(e.error==="not-allowed"||e.error==="service-not-allowed"){
+        closeMic(); gentle("Please let me hear you! 🎤"); return;
+      }
+      if(e.error==="audio-capture"){
+        closeMic(); gentle("Microphone unavailable — tap ? to hear it."); return;
+      }
+    };
+
+    rec.onend=function(){
+      if(!isListening || micRec!==rec) return;
+      if((Date.now()-listeningSince) < LISTEN_MS && restarts < MAX_RESTARTS){
+        restarts++;
+        openMic();
+      } else {
+        closeMic();
+        gentle("Almost! Try again!");
+      }
+    };
+
+    try{ rec.start(); }
+    catch(err){ closeMic(); gentle("Microphone unavailable — tap ? to hear it."); }
+  }
+
   function startListening(){
     if(!SR || state!=="idle") return;
-
-    /* stop the app's own voice so it can't be heard as an answer */
-    if("speechSynthesis" in window) speechSynthesis.cancel();
-
-    var rec=new SR();
-    activeRec=rec; isListening=true; heard=[];
-    rec.lang="en-US";
-    rec.continuous=true;      /* keep listening through pauses — slow "s… i… t" speech */
-    rec.interimResults=true;  /* match partial results early, before the final transcript */
-    rec.maxAlternatives=5;    /* more candidate transcripts to check */
+    cancelSpeech();
 
     setState("listening"); hideBubble(); showListeningUI();
     micBtn.classList.add("listening"); micLabel.textContent="Listening…"; owlMood("mood-listen");
+    isListening=true; listeningSince=Date.now(); restarts=0; heard=[];
 
-    /* in continuous mode e.results accumulates — scan everything each time */
-    function checkResults(res){
-      for(var i=0;i<res.length;i++){
-        var alts=res[i];
-        for(var j=0;j<alts.length;j++){
-          var raw=alts[j].transcript;
-          heard.push(raw.toLowerCase().replace(/\s+/g," ").trim());
-          if(matches(current,raw)) return true;
-        }
-      }
-      return false;
-    }
-
-    rec.onresult=function(e){
-      if(!isListening) return;
-      if(checkResults(e.results)){ finishListening(); onCorrect(); }
-    };
-    rec.onerror=function(e){
-      if(!isListening) return;
-      finishListening();
-      /* always recover to a usable state — never leave the app stuck */
-      if(e.error==="no-speech") gentle("I didn't hear that — try again!");
-      else if(e.error==="not-allowed"||e.error==="service-not-allowed") gentle("Please let me hear you! 🎤");
-      else gentle(pick(TRY));
-    };
-    rec.onend=function(){
-      if(isListening){ finishListening(); gentle("I didn't hear that — try again!"); }
-    };
-
-    try{ rec.start(); }catch(err){ finishListening(); setState("idle"); clearFeedback(); }
-
-    /* generous window for slow speakers */
-    setTimeout(function(){ if(isListening && activeRec===rec){ try{rec.stop();}catch(e){} } },6500);
+    windowTimer=setTimeout(hardStop, LISTEN_MS);
+    openMic();
   }
 
   /* ---------- buttons ---------- */
   micBtn.addEventListener("click", startListening);
+
   helpBtn.addEventListener("click", function(){
     if(state!=="idle") return;
-    speak(current); sfxHelp(); owlMood("mood-happy",1000);
+    var now=Date.now();
+    if(now < helpLockUntil) return;
+    helpLockUntil = now + 1800;
+
+    speak(current);
+    sfxHelp();
+    owlMood("mood-happy",1000);
     showFeedback("Now say it!","hint");
-    setTimeout(function(){ if(state==="idle") clearFeedback(); },1900);
+
+    setTimeout(function(){ if(state==="idle") clearFeedback(); },1800);
   });
 
-  /* Parent fallback: count the current word as correct and move on.
-     Works from idle, listening (stops it first), or a "try again" message. */
   $("parentBtn").addEventListener("click", function(){
-    if(state==="listening") finishListening();
-    if(state==="feedback" && fbKind==="good") return; /* already advancing — ignore */
+    if(state==="listening") closeMic();
+    if(state==="feedback" && fbKind==="good") return;
     clearPending();
     onCorrect();
   });
@@ -557,23 +706,27 @@
   function hideBubble(){ if(!bubbleHidden){ bubbleHidden=true; bubble.classList.add("hide"); } }
   setTimeout(hideBubble, 9000);
 
-  /* ---------- sounds (WebAudio) ---------- */
+  /* ---------- sounds ---------- */
   var actx=null;
   function ac(){
     if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
     if(actx && actx.state==="suspended") actx.resume();
     return actx;
   }
+
   function tone(f,t,d,type,vol){
     var c=ac(); if(!c) return;
-    var o=c.createOscillator(), g=c.createGain();
-    o.type=type||"sine"; o.frequency.value=f; o.connect(g); g.connect(c.destination);
-    var t0=c.currentTime+t;
-    g.gain.setValueAtTime(0,t0);
-    g.gain.linearRampToValueAtTime(vol||.18,t0+.02);
-    g.gain.exponentialRampToValueAtTime(.001,t0+d);
-    o.start(t0); o.stop(t0+d+.05);
+    try{
+      var o=c.createOscillator(), g=c.createGain();
+      o.type=type||"sine"; o.frequency.value=f; o.connect(g); g.connect(c.destination);
+      var t0=c.currentTime+t;
+      g.gain.setValueAtTime(0,t0);
+      g.gain.linearRampToValueAtTime(vol||.18,t0+.02);
+      g.gain.exponentialRampToValueAtTime(.001,t0+d);
+      o.start(t0); o.stop(t0+d+.05);
+    }catch(e){}
   }
+
   function sfxCorrect(){ [523.25,659.25,783.99,1046.5].forEach(function(f,i){ tone(f,i*.09,.28,"triangle",.2); }); }
   function sfxWrong(){ tone(311,0,.25,"sine",.14); tone(247,.16,.3,"sine",.14); }
   function sfxHelp(){ tone(880,0,.12,"sine",.12); tone(1318.5,.09,.16,"sine",.12); }
@@ -584,12 +737,15 @@
   /* ---------- confetti ---------- */
   var cvs=$("confetti"), ctx=cvs.getContext("2d");
   var COLORS=["#FF6B6B","#FFD93D","#2EC4B6","#37B24D","#FF9F1C","#5AA9E6"];
+  var MAX_PARTICLES=600;
   var parts=[], raf=null, celebTimer=null;
+
   function resize(){ cvs.width=innerWidth; cvs.height=innerHeight; }
   addEventListener("resize", resize); resize();
 
   function burst(x,y,n){
-    for(var i=0;i<n;i++){
+    if(parts.length > MAX_PARTICLES) return;
+    for(var i=0;i<n && parts.length<MAX_PARTICLES;i++){
       var a=Math.random()*Math.PI*2, sp=Math.random()*11+4;
       parts.push({x:x,y:y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-6,g:.32,
         s:Math.random()*7+4,c:COLORS[i%COLORS.length],r:Math.random()*6.28,
@@ -597,32 +753,36 @@
     }
     if(!raf) loop();
   }
+
   function loop(){
     ctx.clearRect(0,0,cvs.width,cvs.height);
     parts=parts.filter(function(p){ return p.life>0 && p.y<cvs.height+60; });
-    parts.forEach(function(p){
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i];
       p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.vx*=.992; p.r+=p.vr; p.life--;
       ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
       ctx.globalAlpha=Math.min(1,p.life/40); ctx.fillStyle=p.c;
       ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*1.6); ctx.restore();
-    });
+    }
     if(parts.length){ raf=requestAnimationFrame(loop); }
     else{ raf=null; ctx.clearRect(0,0,cvs.width,cvs.height); }
   }
 
   /* ---------- celebration ---------- */
   function celebrate(){
+    stopCelebrate();
     clearPending();
+    cancelSpeech();
     setState("feedback"); clearFeedback();
     overlay.classList.add("show"); sfxWin();
-    burst(cvs.width/2, cvs.height*.3, 180);
+    burst(cvs.width/2, cvs.height*.3, 160);
     celebTimer=setInterval(function(){
-      burst(Math.random()*cvs.width, cvs.height*.2+Math.random()*90, 80);
-    },650);
+      burst(Math.random()*cvs.width, cvs.height*.2+Math.random()*90, 70);
+    },700);
   }
+
   function stopCelebrate(){ if(celebTimer){ clearInterval(celebTimer); celebTimer=null; } }
 
-  /* ---------- go! ---------- */
   newGame();
 })();
 </script>
